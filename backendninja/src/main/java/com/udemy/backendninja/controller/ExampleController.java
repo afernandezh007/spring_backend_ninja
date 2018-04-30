@@ -1,6 +1,7 @@
 package com.udemy.backendninja.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,7 +15,8 @@ public class ExampleController {
 	// First way
 	@GetMapping("/exampleString")
 	//@RequestMapping(value = "/exampleString", method = RequestMethod.GET)
-	public String exampleString() {
+	public String exampleString(Model model) {
+		model.addAttribute("name", "Gusi");
 		return EXAMPLE_VIEW;
 	}
 
@@ -22,7 +24,10 @@ public class ExampleController {
 	@GetMapping("/exampleMAV") //short way
 	//@RequestMapping(value = "/exampleMAV", method = RequestMethod.GET)
 	public ModelAndView exampleMAV() {
-		return new ModelAndView(EXAMPLE_VIEW);
+		
+		ModelAndView mav = new ModelAndView(EXAMPLE_VIEW);
+		mav.addObject("name", "GusiMAV");
+		return mav;
 	}
 
 }
