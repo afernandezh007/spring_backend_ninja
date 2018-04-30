@@ -1,9 +1,12 @@
 package com.udemy.backendninja.controller;
 
+import javax.validation.Valid;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,16 +51,25 @@ public class Example3Controller {
 		return FORM_VIEW;
 	}
 
+	/**
+	 * 
+	 * @param person
+	 * @param bindingResult object with the errors result
+	 * @return
+	 */
 	@PostMapping("/addPerson")
-	public ModelAndView addPerson(@ModelAttribute("person") Person person) {
+	public ModelAndView addPerson(@Valid @ModelAttribute("person") Person person, BindingResult bindingResult) {
 
-		LOGGER.info("METHOD: 'addPerson' -- PARAMS: '" + person + "'");
+		ModelAndView mav = new ModelAndView();
 
-		ModelAndView mav = new ModelAndView(RESULT_VIEW);
-		mav.addObject("person", person);
-
-		LOGGER.info("TEMPLATE: '" + RESULT_VIEW + "' -- DATA: '" + person + "'");
-
+		if(bindingResult.hasErrors()) {
+			mav.setViewName(FORM_VIEW);
+			
+		}else {
+			mav.setViewName(RESULT_VIEW);
+			mav.addObject("person", person);
+		}
+		
 		return mav;
 	}
 }
