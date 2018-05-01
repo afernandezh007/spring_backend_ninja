@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.udemy.backendninja.entity.Course;
+import com.udemy.backendninja.model.CourseModel;
 import com.udemy.backendninja.service.CourseService;
 
 @Controller
@@ -33,7 +33,7 @@ public class CourseController {
 
 		ModelAndView mav = new ModelAndView(COURSE_VIEW);
 		
-		mav.addObject("course",new Course());//empty object to use in the form
+		mav.addObject("course",new CourseModel());//empty object to use in the form
 		
 		mav.addObject("courses", courseService.listAllCourses());
 		return mav;
@@ -44,7 +44,7 @@ public class CourseController {
 	 * @return
 	 */
 	@PostMapping("/addCourse")
-	public String addCourse(@ModelAttribute("course") Course course) {
+	public String addCourse(@ModelAttribute("course") CourseModel course) {
 
 		LOGGER.info("Call: addCourse() -- PARAM:" + course);
 

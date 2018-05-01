@@ -1,6 +1,7 @@
 package com.udemy.backendninja.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -8,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.udemy.backendninja.converter.CourseConverter;
 import com.udemy.backendninja.entity.Course;
+import com.udemy.backendninja.model.CourseModel;
 import com.udemy.backendninja.repository.CourseJpaRepository;
 import com.udemy.backendninja.service.CourseService;
 
@@ -21,18 +24,33 @@ public class CourseServiceImpl implements CourseService {
 	@Qualifier("courseJpaRepository")
 	private CourseJpaRepository courseJpaRepository;
 	
+	@Autowired
+	@Qualifier("courseConverter")
+	private CourseConverter courseConverter;
+	
 	@Override
-	public List<Course> listAllCourses() {
+	public List<CourseModel> listAllCourses() {
 		
 		LOGGER.info("Call: listAllCourses()");
 		
-		return courseJpaRepository.findAll();
+		List<Course> entityList = courseJpaRepository.findAll();
+		
+		List<CourseModel> modelList = entityList.stream()
+			.map(entity -> courseConverter.entityToModel(entity))
+			.collect(Collectors.toList());
+		
+		return modelList;
 	}
 
 	@Override
-	public Course addCourse(Course course) {
+	public CourseModel addCourse(CourseModel course) {
 		LOGGER.info("Call: addCourse()");
-		return courseJpaRepository.save(course);
+		
+		Course entity = courseConverter.modelToEntity(course);
+		
+		Course entitySaved = courseJpaRepository.save(entity);
+		
+		return courseConverter.entityToModel(entitySaved);
 	}
 
 	@Override
@@ -41,9 +59,12 @@ public class CourseServiceImpl implements CourseService {
 		return 0;
 	}
 
+	/**
+	 * It's the same like save a new course
+	 */
 	@Override
-	public Course modifyCourse(Course course) {
-		return courseJpaRepository.save(course);
+	public CourseModel modifyCourse(CourseModel course) {
+		return addCourse(course);
 	}
 
 }

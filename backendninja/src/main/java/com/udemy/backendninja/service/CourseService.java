@@ -2,15 +2,15 @@ package com.udemy.backendninja.service;
 
 import java.util.List;
 
-import com.udemy.backendninja.entity.Course;
+import com.udemy.backendninja.model.CourseModel;
 
 public interface CourseService {
 
-	List<Course> listAllCourses();
+	List<CourseModel> listAllCourses();
 
-	Course addCourse(Course course);
+	CourseModel addCourse(CourseModel course);
 
 	int removeCourse(int id);
 
-	Course modifyCourse(Course course);
+	CourseModel modifyCourse(CourseModel course);
 }
