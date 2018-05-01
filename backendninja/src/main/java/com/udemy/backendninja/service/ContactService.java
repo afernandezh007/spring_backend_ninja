@@ -13,5 +13,7 @@ public interface ContactService {
 	
 	Contact findContactById(int id);
 	
+	ContactModel  findContactModelById(int id);
+	
 	void removeContact(int id);
 }

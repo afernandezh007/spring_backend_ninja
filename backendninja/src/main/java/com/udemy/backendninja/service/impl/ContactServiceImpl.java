@@ -60,4 +60,9 @@ public class ContactServiceImpl implements ContactService {
 		}	
 	}
 
+	@Override
+	public ContactModel findContactModelById(int id) {
+		return contactConverter.convertEntityToModel(findContactById(id));
+	}
+
 }
