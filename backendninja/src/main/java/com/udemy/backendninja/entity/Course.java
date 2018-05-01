@@ -3,6 +3,7 @@ package com.udemy.backendninja.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,20 +12,20 @@ import javax.persistence.Table;
 public class Course {
 
 	@Id
-	@GeneratedValue
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
-	
-	@Column(name="name")
+
+	@Column(name = "name")
 	private String name;
-	
-	@Column(name="description")
+
+	@Column(name = "description")
 	private String description;
-	
-	@Column(name="price")
+
+	@Column(name = "price")
 	private int price;
-	
-	@Column(name="hours")
+
+	@Column(name = "hours")
 	private int hours;
 
 	public Course() {
@@ -79,4 +80,11 @@ public class Course {
 	public void setHours(int hours) {
 		this.hours = hours;
 	}
+
+	@Override
+	public String toString() {
+		return "Course [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", hours="
+				+ hours + "]";
+	}
+
 }
