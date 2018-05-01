@@ -32,7 +32,9 @@ public class CourseController {
 		LOGGER.info("Call: listAllCourses()");
 
 		ModelAndView mav = new ModelAndView(COURSE_VIEW);
-
+		
+		mav.addObject("course",new Course());//empty object to use in the form
+		
 		mav.addObject("courses", courseService.listAllCourses());
 		return mav;
 	}
