@@ -10,7 +10,7 @@ import com.udemy.backendninja.entity.Course;
 import com.udemy.backendninja.repository.CourseJpaRepository;
 import com.udemy.backendninja.service.CourseService;
 
-@Service("courseService")
+@Service("courseServiceImpl")
 public class CourseServiceImpl implements CourseService {
 
 	@Autowired
