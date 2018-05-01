@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.udemy.backendninja.constant.ViewConstant;
@@ -58,5 +60,12 @@ public class ContactController {
 		ModelAndView mav = new ModelAndView(ViewConstant.CONTACTS);
 		mav.addObject("contacts", contactService.listAllContacts());
 		return mav;
+	}
+	
+	@GetMapping("/removeContact")
+	public ModelAndView removeContact(@RequestParam(name="id", required = true) int id) {
+
+		contactService.removeContact(id);
+		return showContacts();
 	}
 }

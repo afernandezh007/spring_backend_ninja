@@ -19,18 +19,18 @@ public class ContactServiceImpl implements ContactService {
 	@Autowired
 	@Qualifier("contactRepository")
 	private ContactRepository contactRepository;
-	
+
 	@Autowired
 	@Qualifier("contactConverter")
 	private ContactConverter contactConverter;
-	
+
 	@Override
 	public ContactModel addContact(ContactModel contactModel) {
-		
+
 		Contact contact = contactConverter.convertModelToEntity(contactModel);
-		
+
 		contact = contactRepository.save(contact);
-		
+
 		return contactConverter.convertEntityToModel(contact);
 	}
 
@@ -39,11 +39,25 @@ public class ContactServiceImpl implements ContactService {
 		List<Contact> contactList = contactRepository.findAll();
 
 		List<ContactModel> contacts = contactList.stream()
-				.map(contact -> contactConverter.convertEntityToModel(contact))
-				.collect(Collectors.toList());
-		
+			.map(contact -> contactConverter
+			.convertEntityToModel(contact)).collect(Collectors.toList());
+
 		return contacts;
+	}
+
+	@Override
+	public Contact findContactById(int id) {
+		return contactRepository.findById(id);
+	}
+
+	@Override
+	public void removeContact(int id) {
 		
+		Contact contact = findContactById(id);
+		
+		if(contact != null) {
+			contactRepository.delete(contact);
+		}	
 	}
 
 }
