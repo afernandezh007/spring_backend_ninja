@@ -7,8 +7,18 @@ import org.springframework.stereotype.Repository;
 
 import com.udemy.backendninja.entity.User;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Interface UserRepository.
+ */
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User, Serializable>{
 
+	/**
+	 * Find by user name.
+	 *
+	 * @param userName the user name
+	 * @return the user
+	 */
 	User findByUserName(String userName);
 }

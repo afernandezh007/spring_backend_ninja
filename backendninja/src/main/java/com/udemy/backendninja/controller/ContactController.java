@@ -20,21 +20,39 @@ import com.udemy.backendninja.constant.ViewConstant;
 import com.udemy.backendninja.model.ContactModel;
 import com.udemy.backendninja.service.ContactService;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ContactController.
+ */
 @Controller
 @RequestMapping("/contacts")
 public class ContactController {
 
+	/** The Constant LOGGER. */
 	private static final Log LOGGER = LogFactory.getLog(ContactController.class);
 
+	/** The contact service. */
 	@Autowired
 	@Qualifier("contactServiceImpl")
 	private ContactService contactService;
 	
+	/**
+	 * Cancel.
+	 *
+	 * @return the string
+	 */
 	@GetMapping("/cancel")
 	public String cancel() {
 		return "redirect:/contacts/showContacts";
 	}
 
+	/**
+	 * Redirect contact form.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
 	@PreAuthorize("hasRole('ROLE_USER')") //this annotation can be in method or in class even in services
 	@GetMapping("/contactForm")
 	public String redirectContactForm(@RequestParam(name="id", required = false) int id, Model model) {
@@ -48,6 +66,13 @@ public class ContactController {
 		return ViewConstant.CONTACT_FORM;
 	}
 
+	/**
+	 * Adds the contacts.
+	 *
+	 * @param model the model
+	 * @param contactModel the contact model
+	 * @return the string
+	 */
 	@PostMapping("/addContact")
 	public String addContacts(Model model, @ModelAttribute(name = "contactModel") ContactModel contactModel) {
 
@@ -62,6 +87,11 @@ public class ContactController {
 		return "redirect:/contacts/showContacts";
 	}
 	
+	/**
+	 * Show contacts.
+	 *
+	 * @return the model and view
+	 */
 	@GetMapping("/showContacts")
 	public ModelAndView showContacts() {
 
@@ -74,6 +104,12 @@ public class ContactController {
 		return mav;
 	}
 	
+	/**
+	 * Removes the contact.
+	 *
+	 * @param id the id
+	 * @return the model and view
+	 */
 	@GetMapping("/removeContact")
 	public ModelAndView removeContact(@RequestParam(name="id", required = true) int id) {
 

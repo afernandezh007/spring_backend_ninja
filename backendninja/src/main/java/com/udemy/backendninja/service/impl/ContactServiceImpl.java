@@ -13,17 +13,26 @@ import com.udemy.backendninja.model.ContactModel;
 import com.udemy.backendninja.repository.ContactRepository;
 import com.udemy.backendninja.service.ContactService;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ContactServiceImpl.
+ */
 @Service("contactServiceImpl")
 public class ContactServiceImpl implements ContactService {
 
+	/** The contact repository. */
 	@Autowired
 	@Qualifier("contactRepository")
 	private ContactRepository contactRepository;
 
+	/** The contact converter. */
 	@Autowired
 	@Qualifier("contactConverter")
 	private ContactConverter contactConverter;
 
+	/* (non-Javadoc)
+	 * @see com.udemy.backendninja.service.ContactService#addContact(com.udemy.backendninja.model.ContactModel)
+	 */
 	@Override
 	public ContactModel addContact(ContactModel contactModel) {
 
@@ -34,6 +43,9 @@ public class ContactServiceImpl implements ContactService {
 		return contactConverter.convertEntityToModel(contact);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.udemy.backendninja.service.ContactService#listAllContacts()
+	 */
 	@Override
 	public List<ContactModel> listAllContacts() {
 		List<Contact> contactList = contactRepository.findAll();
@@ -45,11 +57,17 @@ public class ContactServiceImpl implements ContactService {
 		return contacts;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.udemy.backendninja.service.ContactService#findContactById(int)
+	 */
 	@Override
 	public Contact findContactById(int id) {
 		return contactRepository.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.udemy.backendninja.service.ContactService#removeContact(int)
+	 */
 	@Override
 	public void removeContact(int id) {
 		
@@ -60,6 +78,9 @@ public class ContactServiceImpl implements ContactService {
 		}	
 	}
 
+	/* (non-Javadoc)
+	 * @see com.udemy.backendninja.service.ContactService#findContactModelById(int)
+	 */
 	@Override
 	public ContactModel findContactModelById(int id) {
 		return contactConverter.convertEntityToModel(findContactById(id));
